@@ -1,10 +1,5 @@
 f = open('input.txt', 'r')
 lines = f.readlines()
-lookup_table = {
-    'red': 12 ,
-    'green': 13,
-    'blue': 14
-}
 sum = 0
 
 for line in lines:
@@ -12,8 +7,12 @@ for line in lines:
     game_num = int(split_list[0].split(' ')[1])
 
     sets = split_list[1].split('; ')
-    invalid = False
 
+    colors = {
+        'red': 0 ,
+        'green': 0,
+        'blue': 0
+    }
     for set in sets:
         subsets = set.split(', ')
 
@@ -21,15 +20,9 @@ for line in lines:
         for subset in subsets:
             num = int(subset.split(' ')[0])
             color = subset.split(' ')[1].strip()
-            
-            if (num > lookup_table[color]):
-                invalid = True
-                break
-        
-        if invalid:
-            break
+            if (num > colors[color]):
+                colors[color] = num
 
-    if not invalid:
-        sum = sum + game_num
+    sum = sum + (colors['red'] * colors['green'] * colors['blue'])
 
 print(sum)
