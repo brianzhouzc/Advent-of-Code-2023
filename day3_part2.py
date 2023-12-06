@@ -18,13 +18,13 @@ for line in lines:
 
         valid = False
         # check left on current line
-        if (start > 0 and re.match(r'[^.\d\s]', line[start - 1])):
+        if (start > 0 and line[start - 1] == '*'):
             if (symbol_map[line_num][start - 1] > 0):
                 sum = sum + symbol_map[line_num][start - 1] * num
             else:
                 symbol_map[line_num][start - 1] = num
         # check right on current line
-        elif(start + length < 140 and re.match(r'[^.\d\s]', line[start + length])):
+        elif(start + length < 140 and line[start + length] == '*'):
             if (symbol_map[line_num][start + length] > 0):
                 sum = sum + symbol_map[line_num][start + length] * num
             else:
@@ -33,12 +33,12 @@ for line in lines:
         for i in range(-1, length + 1):
             if (start + i >= 0 and start + i < 140):
                 # check above and below
-                if (line_num > 0 and re.match(r'[^.\d\s]', lines[line_num - 1][start + i])):
+                if (line_num > 0 and lines[line_num - 1][start + i] == '*'):
                     if (symbol_map[line_num - 1][start + i] > 0):
                         sum = sum + symbol_map[line_num - 1][start + i] * num
                     else:
                         symbol_map[line_num - 1][start + i] = num
-                if(line_num < 139 and re.match(r'[^.\d\s]', lines[line_num + 1][start + i])):
+                if(line_num < 139 and lines[line_num + 1][start + i] == '*'):
                     if (symbol_map[line_num + 1][start + i] > 0):
                         sum = sum + symbol_map[line_num + 1][start + i] * num
                     else:
